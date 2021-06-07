@@ -23,13 +23,14 @@ function Workout() {
 
   const workoutManager = () => {  
     if (!work) {
-      setWork(true);
       setExerciseCounter(0);
       audio.play();
     } else {
-      setWork(false);
       setExerciseCounter(-1);
     }
+
+    setWork(work => !work);
+    setTimeCounter(0);
   }
 
   return (
@@ -38,14 +39,16 @@ function Workout() {
         isPlaying={work}
         duration={exerciseTimeSec}
         onComplete={() => {
-          setExerciseCounter(exerciseCounter => (workSchedule.length === exerciseCounter+1) ? 0 : exerciseCounter + 1);
-          setTimeCounter(timeCounter => timeCounter + exerciseTimeSec);
           
           audio.play();
 
-          if (timeCounter <= workTimeSec) {
+          if (timeCounter+exerciseTimeSec < workTimeSec) {
+            setExerciseCounter(exerciseCounter => (workSchedule.length === exerciseCounter+1) ? 0 : exerciseCounter + 1);
+            setTimeCounter(timeCounter => timeCounter + exerciseTimeSec);
             return [true, 0];
           } else {
+            setWork(false);
+            setExerciseCounter(-1);
             return [false, 0];
           }
         }}
@@ -59,7 +62,7 @@ function Workout() {
       </CountdownCircleTimer>
       <div className="displayText">{
         (exerciseCounter >= 0) ? 
-          `${workSchedule[exerciseCounter]} (${exerciseCounter}/${timeCounter/exerciseTimeSec})` : 
+          `${workSchedule[exerciseCounter]} (${exerciseCounter+1}/${timeCounter/exerciseTimeSec+1})` : 
           "Tak jdeme na to!"
         }</div>
       <button onClick={() => workoutManager()}>{ (!work) ? "Start" : "Stop"}</button>
