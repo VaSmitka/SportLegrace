@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.errorInfo {
+  color: red;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  height: 4em;
+  background-color: #545C38; 
+}
+
+header > a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-radius: 5px;
+  padding-right: 1em;
+  padding-left: 1em;
+} 
+
+header span {
+  color: white;
+  font-weight:900;
+  font-size: large;
+}
+
+header > a:hover {
+  background-color: #8FA834;
+}
+
+header > a:active {
+  background-color: #BBDB44;
+}
+
+.actual {
+  background-color: #8FA834;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form button {
+  border-radius: 3px;
+  padding: 1em;
+  color: #545C38;
+  border: 1px solid #545C38;
+  background-color: #BBDB44;
+  font-weight:600;
+}
+
+form button:hover {
+  background-color: #8FA834;
+}
+
+form button:active {
+  background-color: #545C38;
+  color: white;
+}
+
+.settingsInputs {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1em;
+}
+
+.settingsInputs > div {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+.settingsInputs > div > * {
+  margin-bottom: 1em;
+}
