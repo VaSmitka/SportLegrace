@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import SetUpContext from "../setUpContext";
 
 function Workout() {
@@ -18,25 +19,13 @@ function Workout() {
 
   const workTimeSec = convertToSeconds(getWorkTime());
   const exerciseTimeSec = convertToSeconds(getExerciseTime());
-  const runWorker = () => {
-    setExerciseCounter(exerciseCounter => (workSchedule.length === exerciseCounter+1) ? 0 : exerciseCounter + 1);
-    setTimeCounter(timeCounter => timeCounter + 1);
-    
-    audio.play();
 
-    if (work && timeCounter <= workTimeSec) {
-      setTimeout(runWorker, exerciseTimeSec * 1000);
-    } else {
-      setWork(false);
-    }
-  }
 
   const workoutManager = () => {  
     if (!work) {
       setWork(true);
       setExerciseCounter(0);
       audio.play();
-      setTimeout(runWorker, exerciseTimeSec * 1000);
     } else {
       setWork(false);
       setExerciseCounter(-1);
@@ -45,6 +34,29 @@ function Workout() {
 
   return (
     <main>
+      <CountdownCircleTimer
+        isPlaying={work}
+        duration={exerciseTimeSec}
+        onComplete={() => {
+          setExerciseCounter(exerciseCounter => (workSchedule.length === exerciseCounter+1) ? 0 : exerciseCounter + 1);
+          setTimeCounter(timeCounter => timeCounter + exerciseTimeSec);
+          
+          audio.play();
+
+          if (timeCounter <= workTimeSec) {
+            return [true, 0];
+          } else {
+            return [false, 0];
+          }
+        }}
+        colors={[
+          ['#545C38', 0.33],
+          ['#8FA834', 0.33],
+          ['#BBDB44', 0.33],
+        ]}
+      >
+        {({ remainingTime }) => remainingTime}
+      </CountdownCircleTimer>
       <div className="displayText">{(exerciseCounter >= 0) ? workSchedule[exerciseCounter] : "Tak jdeme na to!"}</div>
       <button onClick={() => workoutManager()}>{ (!work) ? "Start" : "Stop"}</button>
     </main>
