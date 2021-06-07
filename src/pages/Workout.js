@@ -57,7 +57,11 @@ function Workout() {
       >
         {({ remainingTime }) => remainingTime}
       </CountdownCircleTimer>
-      <div className="displayText">{(exerciseCounter >= 0) ? workSchedule[exerciseCounter] : "Tak jdeme na to!"}</div>
+      <div className="displayText">{
+        (exerciseCounter >= 0) ? 
+          `${workSchedule[exerciseCounter]} (${exerciseCounter}/${timeCounter/exerciseTimeSec})` : 
+          "Tak jdeme na to!"
+        }</div>
       <button onClick={() => workoutManager()}>{ (!work) ? "Start" : "Stop"}</button>
     </main>
   );
