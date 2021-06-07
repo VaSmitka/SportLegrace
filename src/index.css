@@ -52,6 +52,7 @@ header > a:active {
 
 main {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding-top: 2em;
@@ -64,20 +65,21 @@ form {
   justify-content: center;
 }
 
-form button {
+button {
   border-radius: 3px;
   padding: 1em;
   color: #545C38;
   border: 1px solid #545C38;
   background-color: #BBDB44;
   font-weight:600;
+  cursor: pointer;
 }
 
-form button:hover {
+button:hover {
   background-color: #8FA834;
 }
 
-form button:active {
+button:active {
   background-color: #545C38;
   color: white;
 }
@@ -96,4 +98,11 @@ form button:active {
 
 .settingsInputs > div > * {
   margin-bottom: 1em;
+}
+
+.displayText {
+  font-weight:900;
+  font-size: 30px;
+  color: #545C38;
+  margin-bottom: 2em;
 }

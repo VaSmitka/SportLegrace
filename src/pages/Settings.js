@@ -6,15 +6,16 @@ import SetUpContext from "../setUpContext";
 
 function Settings({ setActual }) {
   const history = useHistory();
-  const { setWorkTime, setWorkSchedule } = useContext(SetUpContext);
+  const { setWorkTime, setExerciseTime, setWorkSchedule } = useContext(SetUpContext);
 
   return (
     <>
       <main >
         <Formik
-          initialValues={{ workTime: '', workSchedule: '' }}
+          initialValues={{ workTime: '', exerciseTime: '', workSchedule: '' }}
           validationSchema={Yup.object().shape({
             workTime: Yup.string().required(),
+            exerciseTime: Yup.string().required(),
             workSchedule: Yup.mixed().required(),
           })}
           onSubmit={(values, { setSubmitting }) => {
@@ -22,6 +23,7 @@ function Settings({ setActual }) {
             reader.onload = () => {
               const exercises = reader.result.split('\n');
               setWorkTime(values.workTime);
+              setExerciseTime(values.exerciseTime);
               setWorkSchedule(exercises);
               setSubmitting(false);
               setActual("Workout");
@@ -44,6 +46,7 @@ function Settings({ setActual }) {
             <div className="settingsInputs">
               <div>
                 <label htmlFor="workTime">Work Time:</label>
+                <label htmlFor="exerciseTime">ExerciseTime:</label>
                 <label htmlFor="workSchedule">Work Schedule:</label>
               </div>
               <div>
@@ -56,6 +59,16 @@ function Settings({ setActual }) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.workTime}
+                />
+                <input
+                  id="exerciseTime"
+                  type="time"
+                  name="exerciseTime"
+                  min="0:00"
+                  max="59:59"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.exerciseTime}
                 />
                 <input
                   id="workSchedule"
