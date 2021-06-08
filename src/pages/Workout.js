@@ -6,6 +6,8 @@ function Workout() {
   const [ work, setWork ] = useState(false);
   const [ timeCounter, setTimeCounter ] = useState(0);
   const [ exerciseCounter, setExerciseCounter ] = useState(-1);
+  const [ isPause, setIsPause ] = useState(false);
+  const [key, setKey] = useState(0);
   const { getWorkTime, getExerciseTime, getWorkSchedule } = useContext(SetUpContext);
 
   const url = "/sound/beeb.mp3";
@@ -31,6 +33,12 @@ function Workout() {
 
     setWork(work => !work);
     setTimeCounter(0);
+    setKey(prevKey => prevKey + 1)
+  }
+
+  const workoutPause = () => {
+    setWork(work => !work);
+    setIsPause(isPause => !isPause);
   }
 
   return (
@@ -38,6 +46,7 @@ function Workout() {
       <CountdownCircleTimer
         isPlaying={work}
         duration={exerciseTimeSec}
+        key={key}
         onComplete={() => {
           
           audio.play();
@@ -65,7 +74,12 @@ function Workout() {
           `${workSchedule[exerciseCounter]} (${exerciseCounter+1}/${timeCounter/exerciseTimeSec+1})` : 
           "Tak jdeme na to!"
         }</div>
-      <button onClick={() => workoutManager()}>{ (!work) ? "Start" : "Stop"}</button>
+        <div className="control">
+          {work && <button onClick={() => workoutPause()}>Pause</button>}
+          {isPause ? 
+            <button onClick={() => workoutPause()}>Continue workout</button> :
+            <button onClick={() => workoutManager()}>{ (!work) ? "Start" : "Reset"}</button> }          
+        </div>
     </main>
   );
 }
